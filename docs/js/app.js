@@ -142,7 +142,7 @@
           if (params.dataType === 'node') {
             return `<strong>${params.data.name}</strong><br>
               Category: ${clusterNames[params.data.category]}<br>
-              Document Frequency: <strong>${params.data.value:,}</strong><br>
+              Document Frequency: <strong></strong><br>
               Avg Publication Year: <strong>${params.data.avgYear}</strong><br>
               <em>Click to inspect related documents</em>`;
           } else {
