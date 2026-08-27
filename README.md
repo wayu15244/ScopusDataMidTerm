@@ -63,12 +63,12 @@ python scopus_eda_analysis.py
 ## แพลตฟอร์มการแสดงผลด้วยภาพแบบโต้ตอบ (Interactive Visualizations)
 
 แดชบอร์ดได้รับการออกแบบใหม่ทั้งหมดโดยประยุกต์ใช้เทคโนโลยี **Apache ECharts** พร้อมระบบ **Force-directed Physics Simulation** ป้องกันปัญหาตัวอักษรและโหนดซ้อนทับกันอย่างสิ้นเชิง ประกอบด้วย 6 มุมมองหลัก:
-1. ** Interactive Knowledge Network:** กราฟเครือข่ายความสัมพันธ์คำสำคัญแบบฟิสิกส์แรงผลัก ขนาดโหนดแทน Document Frequency และความหนาของเส้นแทน Co-occurrence Weight แบ่งเป็น 5 Thematic Clusters พร้อมระบบคลิกโหนดเพื่อดูรายการบทความจริงในแถบด้านข้าง
-2. ** Dynamic Semantic Word Cloud:** คลาวด์คำสำคัญจัดวางแบบไร้การซ้อนทับ (Collision-free Layout) กรองดูแนวโน้มรายปี (2020–2026) และคลิกเพื่อนำคำสำคัญไปค้นหาในบทความได้ทันที
-3. ** Cross-Disciplinary Topic Overlap Heatmap:** แผนภูมิความร้อนแบบไล่ระดับสีต่อเนื่อง (Continuous Gradient) แสดงการกระจายตัวของเทคโนโลยีสำคัญ (เช่น Machine Learning, Cloud, Optimization) ข้ามทั้ง 10 สาขาวิชา
-4. ** Strategic Topic Growth & Evolution Quadrant:** จตุภาคประเมินการเติบโตเชิงยุทธศาสตร์: คำนวณอัตราการเติบโตเชิงสัมพัทธ์ $log_2(Recent/Prior)$ เทียบกับปริมาณบทความจริง แบ่งออกเป็น 4 โซน: High-Volume Emerging, Core Established, Emerging Niche, และ Specialized Topics
-5. ** EDA Descriptive Metrics:** แดชบอร์ดสรุปสถิติเชิงพรรณนา กราฟแท่งเปรียบเทียบข้อมูลดิบกับข้อมูลสะอาด และกราฟพื้นที่แนวโน้มปีที่ตีพิมพ์
-6. ** Scopus Literature Explorer:** ระบบค้นหาบทความวิจัย ค้นหาตามชื่อเรื่อง ผู้แต่ง หรือคำสำคัญ กรองตามสาขาวิชา และเรียงตามการอ้างอิง พร้อมหน้าต่าง Modal แสดงบทคัดย่อฉบับเต็มและลิงก์ DOI
+1. **Interactive Knowledge Network:** กราฟเครือข่ายความสัมพันธ์คำสำคัญแบบฟิสิกส์แรงผลัก ขนาดโหนดแทน Document Frequency และความหนาของเส้นแทน Co-occurrence Weight แบ่งเป็น 5 Thematic Clusters พร้อมระบบคลิกโหนดเพื่อดูรายการบทความจริงในแถบด้านข้าง
+2. **Dynamic Semantic Word Cloud:** คลาวด์คำสำคัญจัดวางแบบไร้การซ้อนทับ (Collision-free Layout) กรองดูแนวโน้มรายปี (2020–2026) และคลิกเพื่อนำคำสำคัญไปค้นหาในบทความได้ทันที
+3. **Cross-Disciplinary Topic Overlap Heatmap:** แผนภูมิความร้อนแบบไล่ระดับสีต่อเนื่อง (Continuous Gradient) แสดงการกระจายตัวของเทคโนโลยีสำคัญ (เช่น Machine Learning, Cloud, Optimization) ข้ามทั้ง 10 สาขาวิชา
+4. **Strategic Topic Growth & Evolution Quadrant:** จตุภาคประเมินการเติบโตเชิงยุทธศาสตร์: คำนวณอัตราการเติบโตเชิงสัมพัทธ์ $log_2(Recent/Prior)$ เทียบกับปริมาณบทความจริง แบ่งออกเป็น 4 โซน: High-Volume Emerging, Core Established, Emerging Niche, และ Specialized Topics
+5. **EDA Descriptive Metrics:** แดชบอร์ดสรุปสถิติเชิงพรรณนา กราฟแท่งเปรียบเทียบข้อมูลดิบกับข้อมูลสะอาด และกราฟพื้นที่แนวโน้มปีที่ตีพิมพ์
+6. **Scopus Literature Explorer:** ระบบค้นหาบทความวิจัย ค้นหาตามชื่อเรื่อง ผู้แต่ง หรือคำสำคัญ กรองตามสาขาวิชา และเรียงตามการอ้างอิง พร้อมหน้าต่าง Modal แสดงบทคัดย่อฉบับเต็มและลิงก์ DOI
 
 ---
 
