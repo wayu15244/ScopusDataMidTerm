@@ -189,6 +189,7 @@
     };
 
     chartNetwork.setOption(option, true);
+    chartNetwork.resize();
 
     chartNetwork.off('click');
     chartNetwork.on('click', function(p) {
@@ -309,6 +310,7 @@
     };
 
     chartWordCloud.setOption(option, true);
+    chartWordCloud.resize();
     chartWordCloud.off('click');
     chartWordCloud.on('click', function(p) {
       navTabs[5].click();
@@ -321,7 +323,7 @@
   document.getElementById('wc-apply').onclick = renderWordCloud;
 
   // =========================================================================
-  // 3. CROSS-DISCIPLINARY HEATMAP (Continuous Gradient)
+  // 3. CROSS-DISCIPLINARY HEATMAP (Continuous Gradient + Split Workbench Inspector)
   // =========================================================================
   function renderHeatmap() {
     const dom = document.getElementById('echarts-heatmap');
@@ -332,10 +334,12 @@
 
     const heatData = [];
     let maxVal = 0;
+    let minVal = 9999;
     data.subject_matrix.forEach((row, sIdx) => {
       row.counts.forEach((val, kIdx) => {
         heatData.push([kIdx, sIdx, val]);
         if (val > maxVal) maxVal = val;
+        if (val < minVal) minVal = val;
       });
     });
 
@@ -348,14 +352,15 @@
         formatter: function(p) {
           return `<strong>${ySubjects[p.value[1]]}</strong><br>` +
                  `Technology: <em>${xKeywords[p.value[0]]}</em><br>` +
-                 `Volume: <strong>${p.value[2]}</strong> documents`;
+                 `Volume: <strong>${p.value[2]}</strong> documents<br>` +
+                 `<span style="font-size:0.75rem; color:#2563eb;">Click cell to inspect papers</span>`;
         }
       },
       grid: {
         top: 25,
-        bottom: 85,
-        left: 270,
-        right: 50
+        bottom: 90,
+        left: 230,
+        right: 30
       },
       xAxis: {
         type: 'category',
@@ -367,7 +372,7 @@
           color: '#1e293b',
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: 600,
-          fontSize: 11
+          fontSize: 10.5
         }
       },
       yAxis: {
@@ -378,18 +383,18 @@
           color: '#1e293b',
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: 600,
-          fontSize: 11.5
+          fontSize: 11
         }
       },
       visualMap: {
-        min: 0,
+        min: minVal,
         max: maxVal,
         calculable: true,
         orient: 'horizontal',
         left: 'center',
         bottom: 8,
         inRange: {
-          color: ['#f8fafc', '#bfdbfe', '#2563eb', '#1e3a8a']
+          color: ['#eff6ff', '#bfdbfe', '#60a5fa', '#2563eb', '#1e3a8a']
         },
         textStyle: { fontFamily: 'JetBrains Mono, monospace', fontSize: 10 }
       },
@@ -398,8 +403,8 @@
         data: heatData,
         label: {
           show: true,
-          formatter: function(p) { return p.value[2] > 0 ? p.value[2] : ''; },
-          fontSize: 10.5,
+          formatter: function(p) { return p.value[2]; },
+          fontSize: 10,
           fontFamily: 'JetBrains Mono, monospace',
           color: '#0f172a'
         }
@@ -407,6 +412,51 @@
     };
 
     chartHeatmap.setOption(option, true);
+    chartHeatmap.resize();
+
+    // Heatmap cell click interaction
+    chartHeatmap.off('click');
+    chartHeatmap.on('click', function(p) {
+      const kIdx = p.value[0];
+      const sIdx = p.value[1];
+      const val = p.value[2];
+      const kw = xKeywords[kIdx];
+      const subj = ySubjects[sIdx];
+
+      document.getElementById('hm-cell-tech').textContent = kw;
+      document.getElementById('hm-cell-subj').textContent = subj;
+      document.getElementById('hm-cell-stat').innerHTML = `
+        Volume: <strong style="color:var(--color-accent);">${val} papers</strong><br>
+        Discipline Share: <strong>${((val / 700) * 100).toFixed(1)}%</strong> of ${subj}
+      `;
+
+      const paperList = document.getElementById('hm-paper-list');
+      paperList.replaceChildren();
+
+      const matches = data.sample_documents.filter(d =>
+        d.subject === subj && (
+          d.title.toLowerCase().includes(kw.toLowerCase()) ||
+          (d.keywords && d.keywords.some(k => k.toLowerCase().includes(kw.toLowerCase())))
+        )
+      );
+
+      if (!matches.length) {
+        paperList.innerHTML = '<div style="font-size:0.75rem; color:#64748b; font-family:var(--font-mono); padding:8px 0;">No direct title hits in sample set, view via Explorer.</div>';
+      } else {
+        matches.slice(0, 4).forEach(doc => {
+          const div = document.createElement('div');
+          div.className = 'doc-tile';
+          div.style = 'margin-bottom:6px; padding:8px; cursor:pointer;';
+          div.innerHTML = `<div style="font-weight:600; font-size:0.8rem; color:#0f172a; line-height:1.3;">${doc.title}</div>
+            <div style="font-family:var(--font-mono); font-size:0.68rem; color:#64748b; margin-top:2px;">${doc.authors} (${doc.year}) · Cited: ${doc.cited_by}</div>`;
+          div.onclick = () => openModal(doc);
+          paperList.appendChild(div);
+        });
+      }
+
+      document.getElementById('hm-default-msg').style.display = 'none';
+      document.getElementById('hm-selected-msg').style.display = 'block';
+    });
   }
 
   // =========================================================================
@@ -500,6 +550,7 @@
     };
 
     chartQuadrant.setOption(option, true);
+    chartQuadrant.resize();
   }
 
   // =========================================================================
@@ -526,6 +577,7 @@
         { name: 'Cleaned Records (>=600)', type: 'bar', data: cleanVals, itemStyle: { color: '#2563eb' }, markLine: { data: [{ xAxis: 600, label: { formatter: 'Min 600' } }], lineStyle: { color: '#ef4444' } } }
       ]
     }, true);
+    chartSubjectBar.resize();
 
     const years = Object.keys(data.year_distribution);
     const yearCounts = Object.values(data.year_distribution);
@@ -550,6 +602,7 @@
         }
       }]
     }, true);
+    chartYearTrend.resize();
   }
 
   // =========================================================================

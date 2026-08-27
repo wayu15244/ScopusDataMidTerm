@@ -13,13 +13,7 @@ scopus_eda_analysis.py
 """
 
 import os
-import sys
 import re
-
-# รองรับการแสดงผลภาษาไทยบน Windows Terminal
-if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8')
-
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import normalize
