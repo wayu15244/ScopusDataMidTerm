@@ -1,5 +1,7 @@
-# Python and build scripts
-*.py
+# Build and temporary generator scripts
+generate_*.py
+build_*.py
+test_*.py
 *.pyc
 __pycache__/
 *.ipynb_checkpoints/
@@ -7,6 +9,9 @@ __pycache__/
 _build/
 build/
 scripts/
+
+# Allow only necessary core assignment script
+!scopus_eda_analysis.py
 
 # OS and Editor files
 .DS_Store
@@ -20,3 +25,4 @@ Skills/*.zip
 Skills/*.skill
 temp/
 scratch/
+~$*
