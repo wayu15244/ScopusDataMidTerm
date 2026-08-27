@@ -1,0 +1,22 @@
+# Python and build scripts
+*.py
+*.pyc
+__pycache__/
+*.ipynb_checkpoints/
+.pytest_cache/
+_build/
+build/
+scripts/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Skills and temporary files
+Skills/*.zip
+Skills/*.skill
+temp/
+scratch/
