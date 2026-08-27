@@ -26,3 +26,6 @@ Skills/*.skill
 temp/
 scratch/
 ~$*
+
+.agents/
+skills-lock.json
